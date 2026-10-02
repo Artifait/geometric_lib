@@ -27,6 +27,7 @@
 
 ## История изменений (Changelog)
 
+* `c6c56c3` — test: Add unit tests for circle, square, rectangle, triangle
 * `c4c46e7` — fix(rectangle): correct formula in perimeter function
 * `c20cde4` — feat: add triangle module with area and perimeter functions
 * `a01f1f1` — feat: add rectangle module with area and perimeter functions
