@@ -1,0 +1,37 @@
+name: Unit tests
+
+on: push
+
+permissions:
+  contents: read
+  checks: write         
+
+jobs:
+  test:
+    name: Tests on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test runner
+        run: pip install unittest-xml-reporting
+
+      - name: Run unit tests
+        run: python -m xmlrunner discover -s tests -v -o test-results
+
+      - name: Publish test report
+        if: ${{ !cancelled() }}
+        uses: dorny/test-reporter@v1
+        with:
+          name: Test report (${{ matrix.os }})
+          path: test-results/*.xml
+          reporter: java-junit
